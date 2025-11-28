@@ -16,7 +16,7 @@ let backgroundMusic = null;
 let hasEnteredSite = false;
 let isMuted = false;
 let currentSpotifyData = null;
-let spotifyStartTime = null; // Store the initial start time
+let spotifyStartTime = null;
 
 // View counter functionality
 let viewCount = localStorage.getItem('viewCount') || 12492;
@@ -35,7 +35,6 @@ function updateViewCountDisplay() {
 }
 
 function initializeViewCounter() {
-    // Increment view count when they enter the site
     const entryButton = document.getElementById('entry-button');
     if (entryButton) {
         entryButton.addEventListener('click', () => {
@@ -44,8 +43,6 @@ function initializeViewCounter() {
             }
         });
     }
-    
-    // Update display initially
     updateViewCountDisplay();
 }
 
@@ -104,7 +101,6 @@ function initializeEntryPage() {
     
     backgroundMusic = document.getElementById('background-music');
     
-    // Ensure audio is loaded
     if (backgroundMusic) {
         backgroundMusic.load();
     }
@@ -152,24 +148,9 @@ function initializeEntryPage() {
         setTimeout(() => {
             entryPage.style.display = 'none';
             mainSite.style.display = 'block';
-            
             initializeMainSite();
         }, 800);
     });
-}
-
-function startAudioIfNeeded() {
-    if (backgroundMusic && backgroundMusic.paused && !isMuted) {
-        backgroundMusic.volume = 0.6;
-        const playPromise = backgroundMusic.play();
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
-                // Audio started
-            }).catch(error => {
-                // Handle error silently
-            });
-        }
-    }
 }
 
 function toggleAudio() {
@@ -196,7 +177,6 @@ function toggleAudio() {
                 });
             }
         }
-        
         audioIcon.className = 'fas fa-volume-up';
         audioControl.classList.remove('muted');
     }
@@ -206,19 +186,12 @@ function initializeMainSite() {
     initializeTypingEffect();
     initializeLastSeen();
     
-    // Spam the console with one message
-    console.log('get out my console kid');
-    console.log('get out my console kid');
-    console.log('get out my console kid');
-    console.log('get out my console kid');
-    console.log('get out my console kid');
-    console.log('get out my console kid');
-    console.log('get out my console kid');
-    console.log('get out my console kid');
-    console.log('get out my console kid');
-    console.log('get out my console kid');
+    // Console spam
+    for (let i = 0; i < 10; i++) {
+        console.log('get out my console kid');
+    }
     
-    // Use fake Discord data permanently instead of API calls
+    // Use fake Discord data
     updateDiscordUI({
         discord_status: 'online',
         discord_user: {
@@ -227,35 +200,34 @@ function initializeMainSite() {
         },
         activities: [{
             type: 0,
-            name: 'Visual Studio',
-            state: 'Coding in Visual Studio'
+            name: 'Visual Studio Code',
+            state: 'Coding in Visual Studio Code'
         }]
     });
     
-    // Initialize fake Spotify data immediately with proper timing
+    // Initialize fake Spotify data with proper album art URL
     const now = Date.now();
-    const songDuration = (3 * 60 + 22) * 1000; // 3 minutes 39 seconds in milliseconds
+    const songDuration = (3 * 60 + 22) * 1000; // 3:22 in milliseconds
     
-    // Set the persistent start time only once
     if (!spotifyStartTime) {
         spotifyStartTime = now;
     }
     
     updateSpotifyUI({
         song: 'Calling My Phone',
-        artist: 'Lil Tjay',
-        album_art_url: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fopen.spotify.com%2Ftrack%2F3J8EOeKLTLXORtWPpOU5bE&psig=AOvVaw33_i7-Lc8JlTN-FiERygq3&ust=1764453272606000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCNDjgPPqlZEDFQAAAAAdAAAAABAE',
+        artist: 'Lil Tjay, 6LACK',
+        // Direct Spotify album art URL
+        album_art_url: 'https://i.scdn.co/image/ab67616d0000b2732d81f491319b86356eb10c4e',
         timestamps: {
-            start: spotifyStartTime, // Use persistent start time
-            end: spotifyStartTime + songDuration // End in 3:22 from start
+            start: spotifyStartTime,
+            end: spotifyStartTime + songDuration
         }
     });
     
-    setInterval(updateLastSeen, 1000); // Update every second for real-time sync
-    
+    setInterval(updateLastSeen, 1000);
     setInterval(updateSpotifyProgress, 1000);
     
-    // Spam "get out my console kid" every 2 seconds
+    // Continue console spam every 2 seconds
     setInterval(() => {
         console.log('get out my console kid');
     }, 2000);
@@ -333,47 +305,17 @@ function updateDiscordUI(userData) {
     const mainStatusDot = document.getElementById('main-status-dot');
     const mainStatusText = document.getElementById('main-status-text');
     
-    if (userData && userData.discord_user) {
-        // Use actual Discord avatar if available, otherwise use Ken Carson image
-        const avatarUrl = userData.discord_user.avatar 
-            ? `https://cdn.discordapp.com/avatars/${userData.discord_user.id}/${userData.discord_user.avatar}.png?size=128`
-            : 'https://i1.sndcdn.com/artworks-bRDQNcwB1W1PSNKu-5weSVw-t1080x1080.jpg';
-        
-        if (avatar) {
-            avatar.src = avatarUrl;
-        }
-        if (mainAvatar) {
-            mainAvatar.src = avatarUrl;
-        }
-        
-        if (username) {
-            username.textContent = userData.discord_user.global_name || userData.discord_user.username || 'Crown';
-        }
-    } else {
-        // Fallback to Ken Carson image and Crown username
-        const defaultAvatarUrl = 'https://cdn.discordapp.com/avatars/811321871278145548/ed8a52e8b953f0158057666b49a18ef0?size=1024';
-        if (avatar) {
-            avatar.src = defaultAvatarUrl;
-        }
-        if (mainAvatar) {
-            mainAvatar.src = defaultAvatarUrl;
-        }
-        if (username) {
-            username.textContent = 'Crown';
-        }
-    }
+    const defaultAvatarUrl = 'https://cdn.discordapp.com/avatars/811321871278145548/ed8a52e8b953f0158057666b49a18ef0?size=1024';
+    
+    if (avatar) avatar.src = defaultAvatarUrl;
+    if (mainAvatar) mainAvatar.src = defaultAvatarUrl;
+    if (username) username.textContent = 'Crown';
     
     const status = userData && userData.discord_status ? userData.discord_status : 'offline';
     
-    if (statusDot) {
-        statusDot.className = `status-indicator ${status}`;
-    }
-    if (statusBadge) {
-        statusBadge.className = `status-badge ${status}`;
-    }
-    if (mainStatusDot) {
-        mainStatusDot.className = `status-dot ${status}`;
-    }
+    if (statusDot) statusDot.className = `status-indicator ${status}`;
+    if (statusBadge) statusBadge.className = `status-badge ${status}`;
+    if (mainStatusDot) mainStatusDot.className = `status-dot ${status}`;
     
     const statusTexts = {
         'online': 'Online - Available for projects',
@@ -390,32 +332,21 @@ function updateDiscordUI(userData) {
         const activityText = activity.querySelector('.activity-text');
         if (activityText) {
             if (userData && userData.activities && userData.activities.length > 0) {
-                const customStatus = userData.activities.find(act => act.type === 4);
-                if (customStatus) {
-                    const emoji = customStatus.emoji ? `${customStatus.emoji.name} ` : '';
-                    const state = customStatus.state || '';
-                    activityText.textContent = `${emoji}${state}`.trim() || 'Custom Status';
+                const currentActivity = userData.activities[0];
+                if (currentActivity.type === 0) { 
+                    activityText.textContent = `Playing ${currentActivity.name}`;
+                } else if (currentActivity.type === 2) { 
+                    activityText.textContent = `Listening to ${currentActivity.name}`;
+                } else if (currentActivity.type === 3) { 
+                    activityText.textContent = `Watching ${currentActivity.name}`;
                 } else {
-                    const currentActivity = userData.activities[0];
-                    if (currentActivity.type === 0) { 
-                        activityText.textContent = `Playing ${currentActivity.name}`;
-                    } else if (currentActivity.type === 2) { 
-                        activityText.textContent = `Listening to ${currentActivity.name}`;
-                    } else if (currentActivity.type === 3) { 
-                        activityText.textContent = `Watching ${currentActivity.name}`;
-                    } else {
-                        activityText.textContent = currentActivity.name;
-                    }
+                    activityText.textContent = currentActivity.name;
                 }
             } else {
                 activityText.textContent = statusTexts[status] || 'Offline';
             }
         }
     }
-}
-
-function updateSpotifyStatus() {
-    // This function is no longer needed as we are using fake data
 }
 
 function updateSpotifyProgress() {
@@ -554,7 +485,7 @@ async function copyToClipboard(text) {
             return result;
         }
     } catch (err) {
-        console.error('Erreur lors de la copie:', err);
+        console.error('Error copying:', err);
         return false;
     }
 }
@@ -567,6 +498,7 @@ function initializeSocialLinks() {
             e.preventDefault();
             const linkUrl = link.getAttribute('data-link');
             const platform = link.getAttribute('data-platform');
+            
             if (!linkUrl) {
                 showNotification(
                     'Error',
@@ -575,11 +507,14 @@ function initializeSocialLinks() {
                 );
                 return;
             }
+            
             link.classList.add('copying');
             setTimeout(() => {
                 link.classList.remove('copying');
             }, 150);
+            
             const success = await copyToClipboard(linkUrl);
+            
             if (success) {
                 showNotification(
                     `${platform} copied!`,
