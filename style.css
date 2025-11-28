@@ -260,6 +260,7 @@ body {
     border-radius: 50%;
     border: 2px solid var(--border-secondary);
     transition: all 0.3s ease;
+    object-fit: cover;
 }
 
 .avatar:hover {
@@ -473,6 +474,7 @@ body {
     transition: all 0.3s ease;
     position: relative;
     z-index: 2;
+    object-fit: cover;
 }
 
 .avatar-border {
