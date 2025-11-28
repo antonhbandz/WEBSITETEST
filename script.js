@@ -5,7 +5,7 @@ const CONFIG = {
     SPOTIFY_UPDATE_INTERVAL: 5000
 };
 
-let currentDiscordHandle = '@antonh';
+let currentDiscordHandle = '@Crown';
 let lastDiscordUpdate = 0;
 let lastSpotifyUpdate = 0;
 let spotifyProgress = 0;
@@ -222,8 +222,8 @@ function initializeMainSite() {
     updateDiscordUI({
         discord_status: 'online',
         discord_user: {
-            username: 'antonh',
-            global_name: 'antonh'
+            username: 'Crown',
+            global_name: 'Crown'
         },
         activities: [{
             type: 0,
@@ -234,7 +234,7 @@ function initializeMainSite() {
     
     // Initialize fake Spotify data immediately with proper timing
     const now = Date.now();
-    const songDuration = (3 * 60 + 39) * 1000; // 3 minutes 39 seconds in milliseconds
+    const songDuration = (3 * 60 + 22) * 1000; // 3 minutes 39 seconds in milliseconds
     
     // Set the persistent start time only once
     if (!spotifyStartTime) {
@@ -242,12 +242,12 @@ function initializeMainSite() {
     }
     
     updateSpotifyUI({
-        song: 'Teenage Fever',
-        artist: 'Drake',
-        album_art_url: 'https://i.scdn.co/image/ab67616d0000b2734f0fd9dad63977146e685700',
+        song: 'Calling My Phone',
+        artist: 'Lil Tjay',
+        album_art_url: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fopen.spotify.com%2Ftrack%2F3J8EOeKLTLXORtWPpOU5bE&psig=AOvVaw33_i7-Lc8JlTN-FiERygq3&ust=1764453272606000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCNDjgPPqlZEDFQAAAAAdAAAAABAE',
         timestamps: {
             start: spotifyStartTime, // Use persistent start time
-            end: spotifyStartTime + songDuration // End in 3:39 from start
+            end: spotifyStartTime + songDuration // End in 3:22 from start
         }
     });
     
@@ -266,7 +266,7 @@ function initializeTypingEffect() {
     if (!typingText) return;
     
     const texts = [
-        'made by @antonh',
+        'made by @Crown',
         'creative developer',
         'digital minimalist',
         'code architect',
@@ -347,11 +347,11 @@ function updateDiscordUI(userData) {
         }
         
         if (username) {
-            username.textContent = userData.discord_user.global_name || userData.discord_user.username || 'antonh';
+            username.textContent = userData.discord_user.global_name || userData.discord_user.username || 'Crown';
         }
     } else {
-        // Fallback to Ken Carson image and antonh username
-        const defaultAvatarUrl = 'https://i1.sndcdn.com/artworks-bRDQNcwB1W1PSNKu-5weSVw-t1080x1080.jpg';
+        // Fallback to Ken Carson image and Crown username
+        const defaultAvatarUrl = 'https://cdn.discordapp.com/avatars/811321871278145548/ed8a52e8b953f0158057666b49a18ef0?size=1024';
         if (avatar) {
             avatar.src = defaultAvatarUrl;
         }
@@ -359,7 +359,7 @@ function updateDiscordUI(userData) {
             mainAvatar.src = defaultAvatarUrl;
         }
         if (username) {
-            username.textContent = 'antonh';
+            username.textContent = 'Crown';
         }
     }
     
