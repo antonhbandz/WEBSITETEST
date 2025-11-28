@@ -216,8 +216,8 @@ function initializeMainSite() {
     updateSpotifyUI({
         song: 'Calling My Phone',
         artist: 'Lil Tjay, 6LACK',
-        // Direct Spotify album art URL
-        album_art_url: 'https://i.scdn.co/image/ab67616d0000b2732d81f491319b86356eb10c4e',
+        // Album art URL
+        album_art_url: 'https://a10.gaanacdn.com/gn_img/albums/9En3peWXDV/n3pqz1oEWX/size_l.webp',
         timestamps: {
             start: spotifyStartTime,
             end: spotifyStartTime + songDuration
